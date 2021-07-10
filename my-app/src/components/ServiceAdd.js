@@ -1,10 +1,9 @@
 import {useSelector, useDispatch} from 'react-redux';
-import {changeServiceField, addService} from '../actions/actionCreators';
-
-const selectServiceAdd = (state) => state.serviceAdd;
+import {changeServiceField, addService, removeService} from '../actions/actionCreators';
+import {nanoid} from 'nanoid';
 
 function ServiceAdd() {
-	const item = useSelector(selectServiceAdd);
+	const item = useSelector(state => state.serviceAdd);
 	const dispatch = useDispatch();
 
 	const handleChange = evt => {
@@ -13,8 +12,13 @@ function ServiceAdd() {
 	}
 
 	const handleSubmit = evt => {
-			evt.preventDefault();
+		evt.preventDefault();
+		if (!item.id) {
 			dispatch(addService(item.name, item.price));
+			return;
+		}
+		dispatch(removeService(item.id));
+		dispatch(addService(item.name, item.price))
 	}
 
 	return (
