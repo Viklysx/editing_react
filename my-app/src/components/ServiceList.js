@@ -1,5 +1,5 @@
 import {useSelector, useDispatch} from 'react-redux';
-import {removeService, editService, changeServiceField} from '../actions/actionCreators';
+import {removeService, editService, changeServiceField, cancelService} from '../actions/actionCreators';
 
 function ServiceList() {
   const items = useSelector(state => state.serviceList);
@@ -10,6 +10,7 @@ function ServiceList() {
     if (!editId || editId !== id) {
       dispatch(removeService(id));
     }
+    dispatch(cancelService());
   }
 
   const handleEdit = item => {

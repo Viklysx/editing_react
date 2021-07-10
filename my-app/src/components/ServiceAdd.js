@@ -1,6 +1,5 @@
 import {useSelector, useDispatch} from 'react-redux';
-import {changeServiceField, addService, removeService} from '../actions/actionCreators';
-import {nanoid} from 'nanoid';
+import {changeServiceField, addService, removeService, cancelService} from '../actions/actionCreators';
 
 function ServiceAdd() {
 	const item = useSelector(state => state.serviceAdd);
@@ -21,11 +20,17 @@ function ServiceAdd() {
 		dispatch(addService(item.name, item.price))
 	}
 
+	const handleCancel = evt => {
+		evt.preventDefault();
+		dispatch(cancelService());
+	}
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<input name='name' onChange={handleChange} value={item.name} />
 			<input name='price' onChange={handleChange} value={item.price} />
 			<button type='submit'>Save</button>
+			{item.id && <button onClick={handleCancel}>Cancel</button>}
 		</form>
 	);
 }
